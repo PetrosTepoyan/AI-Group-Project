@@ -23,6 +23,7 @@ class Board(State):
         else:
             self.player_positions = player_positions
             
+        self.current_player = current_player
         self.fences_horizontal = fences_horizontal
         self.fences_vertical = fences_vertical
 
