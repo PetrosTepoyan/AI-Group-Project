@@ -1,18 +1,24 @@
-from copy import deepcopy
+
 from Core.Player import Player
 from Protocols import Action, State
 from Actions import Move, PlaceFence
+from GameFlow import FenceChecker, MoveChecker
 
 class Board(State):
     
     def __init__(
         self,
+        fence_checker: FenceChecker,
+        move_checker: MoveChecker,
         grid_size = 9,
         player_positions: dict = None,
         current_player: Player = Player.MAX,
         fences_horizontal = set(),
         fences_vertical = set()
     ):
+        
+        self.fence_checker = fence_checker
+        self.move_checker = move_checker
         self.grid_size = grid_size
         mid_point = grid_size // 2  
         if player_positions is None:
@@ -53,7 +59,15 @@ class Board(State):
         return actions
 
     def get_action_result(self, action: Action):
-        new_board = deepcopy(self)  # Create a deep copy of the current board
+        new_board = Board(
+            fence_checker = self.fence_checker,
+            move_checker = self.move_checker,
+            grid_size = self.grid_size,
+            player_positions = self.player_positions,
+            current_player = self.current_player,
+            fences_horizontal = self.fences_horizontal,
+            fences_vertical = self.fences_vertical
+        )
         if isinstance(action, Move):
             # Assume it's the current player's move
             new_board.player_positions[new_board.get_player()] = action.to_coord
