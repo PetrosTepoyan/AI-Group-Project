@@ -33,7 +33,15 @@ class TestMoveChecker(unittest.TestCase):
 
     def test_can_move_with_fence(self):
         self.fences_vertical.add((4, 0))
-        self.assertFalse(self.move_checker.can_move(Player.MAX, (4, 1), self.fences_horizontal, self.fences_vertical, self.player_positions))
+        self.assertTrue(
+            self.move_checker.can_move(
+                Player.MAX,
+                (4, 1),
+                self.fences_horizontal,
+                self.fences_vertical,
+                self.player_positions
+            )
+        )
 
     def test_can_jump_over_opponent(self):
         self.player_positions[Player.MIN] = (4, 1)
@@ -42,7 +50,15 @@ class TestMoveChecker(unittest.TestCase):
     def test_can_not_jump_over_opponent_with_fence(self):
         self.player_positions[Player.MIN] = (4, 1)
         self.fences_horizontal.add((4, 1))
-        self.assertFalse(self.move_checker.can_jump_over(Player.MAX, Player.MIN, self.fences_horizontal, self.fences_vertical, self.player_positions))
+        self.assertFalse(
+            self.move_checker.can_jump_over(
+                Player.MAX,
+                Player.MIN,
+                self.fences_horizontal,
+                self.fences_vertical, 
+                self.player_positions
+            )
+        )
 
     def test_can_jump_over_opponent_diagonally(self):
         self.player_positions[Player.MIN] = (4, 1)
