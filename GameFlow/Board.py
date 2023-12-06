@@ -1,4 +1,3 @@
-
 from Core.Player import Player
 from Protocols import Action, State
 from Actions import Move, PlaceFence
@@ -77,15 +76,6 @@ class Board(State):
         new_board.toggle_player()  # Switch to the other player
         
         return new_board
-    
-    def is_move_valid(self, from_coord, to_coord):
-        # Add logic to check if the move is valid (e.g., not blocked by a fence).
-        return True
-
-    def can_place_fence(self, coord, is_horizontal):
-        # Add logic to check if a fence can be placed (not already placed, not blocking a path).
-        self.fences
-        return True
     
     def __eq__(self, other):
         if isinstance(other, Board):
