@@ -3,7 +3,11 @@ from Protocols import Search
 from Core import Player
 from copy import deepcopy
 
-class MinimaxSearch:
+class DLMinimaxSearch:
+    
+    def __init__(self, depth, heuristic):
+        self.depth = depth
+        self.heuristic = heuristic
     
     def find_strategy(self, initial_state, terminal_test):
         self.state_utilities = {}
@@ -13,12 +17,16 @@ class MinimaxSearch:
         self.max_value(
             deepcopy(initial_state),
             terminal_test,
-            strategy
+            strategy,
+            self.depth
         )
         
         return strategy
 
-    def max_value(self, state, terminal_test, strategy):
+    def max_value(self, state, terminal_test, strategy, depth):
+        
+        if depth == 0 or terminal_test.is_terminal(state):
+            return self.heuristic(state)
         
         if state in self.state_utilities:
             return self.state_utilities[state]
@@ -48,7 +56,7 @@ class MinimaxSearch:
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
             
-            v2 = self.min_value(new_state, terminal_test, strategy)
+            v2 = self.min_value(new_state, terminal_test, strategy, depth - 1)
             self.state_utilities[new_state] = v2 
             
             if v2 > v:
@@ -62,7 +70,11 @@ class MinimaxSearch:
         
         return v
     
-    def min_value(self, state, terminal_test, strategy):
+    def min_value(self, state, terminal_test, strategy, depth):
+        
+        if depth == 0 or terminal_test.is_terminal(state):
+            return self.heuristic(state)
+        
         if state in self.state_utilities:
             return self.state_utilities[state]
         
@@ -90,7 +102,7 @@ class MinimaxSearch:
         for action in actions:
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
-            v2 = self.max_value(new_state, terminal_test, strategy)
+            v2 = self.max_value(new_state, terminal_test, strategy, depth - 1)
             self.state_utilities[new_state] = v2  
             
             if v2 < v:

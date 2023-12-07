@@ -4,4 +4,4 @@
 [JavaScript | Monte Carlo](https://github.com/gorisanson/quoridor-ai)
 
 To run tests:
-`python3 tests/FenceCheckerTests.py`
+`python3 tests/test.py`

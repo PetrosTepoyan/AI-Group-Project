@@ -3,22 +3,22 @@ from Protocols import Search
 from Core import Player
 from copy import deepcopy
 
-class MinimaxSearch:
+class AlphaBetaSearch(Search):
     
     def find_strategy(self, initial_state, terminal_test):
+        strategy = {}
         self.state_utilities = {}
         self.visited_states = set()
-        strategy = {}
         self._number_of_generated_states = 0
         self.max_value(
             deepcopy(initial_state),
             terminal_test,
+            -inf, inf,
             strategy
         )
-        
         return strategy
 
-    def max_value(self, state, terminal_test, strategy):
+    def max_value(self, state, terminal_test, alpha, beta, strategy):
         
         if state in self.state_utilities:
             return self.state_utilities[state]
@@ -35,9 +35,11 @@ class MinimaxSearch:
         
         self.visited_states.add(state)
         
+        # The advantages of alpha-beta start to arise here. We first make a symbolical reassignment of alpha
+        alpha_1 = alpha
         v = -inf
         move = None
-
+        
         actions = state.get_applicable_actions()
         
         if len(actions) == 0:
@@ -47,22 +49,32 @@ class MinimaxSearch:
         for action in actions:
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
-            
-            v2 = self.min_value(new_state, terminal_test, strategy)
-            self.state_utilities[new_state] = v2 
+            v2 = self.min_value(new_state, terminal_test, alpha_1, beta, strategy)
             
             if v2 > v:
                 v = v2
                 move = action
+                # Here, we update the value of alpha if we found a greater one
+                alpha_1 = max(alpha_1, v)
                 
-            self.state_utilities[new_state] = v
+            # And here is the power of alpha-beta. If we found that our current utility is greater than beta,
+            # We will simply return the utility, thus pruning the other states.
+            if v >= beta:
+                strategy[state] = move
+                self.state_utilities[new_state] = v
+                return v
         
         strategy[state] = move
         self.state_utilities[new_state] = v
         
+        if move is None:
+            print(state, len(actions))
+        
         return v
     
-    def min_value(self, state, terminal_test, strategy):
+    # Analogically to the method above, we implement min_value method
+    def min_value(self, state, terminal_test, alpha, beta, strategy):
+        
         if state in self.state_utilities:
             return self.state_utilities[state]
         
@@ -71,7 +83,7 @@ class MinimaxSearch:
             strategy[state] = None
             self.state_utilities[state] = utility
             return utility
-            
+        
         if state in self.visited_states:
             self.state_utilities[state] = 0
             return 0
@@ -79,10 +91,11 @@ class MinimaxSearch:
         self.visited_states.add(state)
         
         v = inf
+        beta_1 = beta
         move = None
         
         actions = state.get_applicable_actions()
-
+        
         if len(actions) == 0:
             self.state_utilities[state] = 0
             return 0
@@ -90,14 +103,23 @@ class MinimaxSearch:
         for action in actions:
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
-            v2 = self.max_value(new_state, terminal_test, strategy)
-            self.state_utilities[new_state] = v2  
+            v2 = self.max_value(new_state, terminal_test, alpha, beta_1, strategy)
             
             if v2 < v:
                 v = v2
                 move = action
+                beta_1 = min(beta_1, v)
+                
+            if v <= alpha:
+                strategy[state] = move
+                self.state_utilities[new_state] = v  
         
+                return v
+                
+        if move is None:
+            print(state, len(actions))
+            
         strategy[state] = move
-        self.state_utilities[new_state] = v
+        self.state_utilities[new_state] = v  
         
         return v
