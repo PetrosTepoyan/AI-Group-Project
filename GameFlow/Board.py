@@ -10,7 +10,7 @@ class Board(State):
         self,
         fence_checker: FenceChecker,
         move_checker: MoveChecker,
-        grid_size = 9,
+        grid_size,
         player_positions: dict = None,
         current_player: Player = Player.MAX,
         fences_horizontal = set(),
@@ -82,9 +82,9 @@ class Board(State):
             new_board.player_positions[self.current_player] = action.to_coord
         elif isinstance(action, PlaceFence):
             if action.isHorizontal:
-                new_board.fences_horizontal.add((action.isHorizontal, action.coord))
+                new_board.fences_horizontal.add(action.coord)
             else:
-                new_board.fences_vertical.add((action.isHorizontal, action.coord))
+                new_board.fences_vertical.add(action.coord)
         else:
             print("UNKNOWN ACTION", action)
         new_board.toggle_player()  # Switch to the other player
@@ -92,12 +92,14 @@ class Board(State):
         return new_board
     
     def can_place_fence(self, placing_coord, is_horizontal):
-        return self.fence_checker.can_place_fence(
+        
+        can_place = self.fence_checker.can_place_fence(
             placing_coord,
             is_horizontal,
             fences_horizontal = self.fences_horizontal,
             fences_vertical = self.fences_vertical
         )
+        return can_place
     
     def get_movable_coords(self):
         return self.move_checker.get_movable_coords(
@@ -113,11 +115,13 @@ class Board(State):
         if self.fences_horizontal != other.fences_horizontal:
             return False
         
-        if self.fences_vertical == other.fences_vertical:
+        if self.fences_vertical != other.fences_vertical:
             return False
         
-        if self.current_player == other.current_player:
+        if self.current_player != other.current_player:
             return False
+        
+        return True
     
     def __hash__(self):
         return hash(

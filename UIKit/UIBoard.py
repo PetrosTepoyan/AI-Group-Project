@@ -11,28 +11,11 @@ class UIBoard:
         self.player_positions = player_positions
 
     def draw(self):
-        for y in range(self.board_size):
-            for x in range(self.board_size):
-                # Print player positions
-                if (x, y) == self.player_positions[Player.MAX]:
-                    print('■', end=' ')
-                elif (x, y) == self.player_positions[Player.MIN]:
-                    print('●', end=' ')
-                else:
-                    print('.', end=' ')
+        tile_size = 3
+        row = "--" * (self.board_size * 2) + "-"
+        cell = "| X " * self.board_size + "|"
+        for _ in range(self.board_size):
+            print(row)
+            print(cell)
+        print(row)
 
-                # Print vertical fences
-                if (x, y) in self.fences_vertical:
-                    print('|', end=' ')
-                else:
-                    print(' ', end=' ')
-
-            print()
-
-            # Print horizontal fences
-            for x in range(self.board_size):
-                if (x, y) in self.fences_horizontal:
-                    print('—————', end=' ')
-                else:
-                    print('   ', end=' ')
-            print()

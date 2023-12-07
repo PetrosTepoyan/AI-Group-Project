@@ -5,6 +5,7 @@ class FenceChecker:
         self.fence_length = fence_length
 
     def can_place_fence(self, coord, is_horizontal, fences_horizontal, fences_vertical):
+        # print(fences_horizontal)
         # Check if the fence is within the bounds of the board
         if is_horizontal:
             if coord[0] > self.grid_size - self.fence_length or coord[1] >= self.grid_size:
