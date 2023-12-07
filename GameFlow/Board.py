@@ -32,6 +32,7 @@ class Board(State):
         self.current_opponent = Player.MIN if current_player == Player.MAX else Player.MAX # for convenience
         self.fences_horizontal = fences_horizontal
         self.fences_vertical = fences_vertical
+        self.max_fences = int(self.grid_size * self.grid_size * (10/81))
 
     def get_player(self) -> Player:
         return self.current_player
@@ -53,15 +54,16 @@ class Board(State):
             actions.append(move)
         
         # Calculate possible fence placements
-        for i in range(self.grid_size - 1):
-            for j in range(self.grid_size - 1):
-                placing_coord = (i, j)
-                if self.can_place_fence(placing_coord, True):
-                    action = PlaceFence(True, placing_coord)
-                    actions.append(action)
-                if self.can_place_fence(placing_coord, False):
-                    action = PlaceFence(False, placing_coord)
-                    actions.append(action)
+        if len(self.fences_horizontal) + len(self.fences_vertical) <= self.max_fences:
+            for i in range(self.grid_size - 1):
+                for j in range(self.grid_size - 1):
+                    placing_coord = (i, j)
+                    if self.can_place_fence(placing_coord, True):
+                        action = PlaceFence(True, placing_coord)
+                        actions.append(action)
+                    if self.can_place_fence(placing_coord, False):
+                        action = PlaceFence(False, placing_coord)
+                        actions.append(action)
 
         return actions
 

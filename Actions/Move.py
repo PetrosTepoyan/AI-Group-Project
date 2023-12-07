@@ -10,7 +10,10 @@ class Move(Action):
         return f"Move | {self.from_coord} {self.to_coord}"
         
     def __eq__(self, other):
-        return self.from_coord == other.from_coord and self.to_coord == other.to_coord
+        try:
+            return self.from_coord == other.from_coord and self.to_coord == other.to_coord
+        except:
+            return False
     
     def __hash__(self):
         return hash((self.from_coord, self.to_coord))
