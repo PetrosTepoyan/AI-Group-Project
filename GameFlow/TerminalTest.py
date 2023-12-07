@@ -23,6 +23,8 @@ class BoardTerminalTest(TerminalTest):
         min_won = board.player_positions[Player.MIN][1] <= 0
         if max_won:
             return 1
-        else:
+        elif min_won:
             return -1
+        else:
+            return 0
     

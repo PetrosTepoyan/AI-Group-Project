@@ -7,9 +7,7 @@ class PlaceFence(Action):
         self.coord = coord
         
     def __eq__(self, other):
-        if isinstance(other, PlaceFence):
-            return self.isHorizontal == other.isHorizontal and self.coord == other.coord
-        return False
+        return self.isHorizontal == other.isHorizontal and self.coord == other.coord
     
     def __hash__(self):
         return hash((self.isHorizontal, self.coord))

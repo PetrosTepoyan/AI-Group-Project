@@ -2,6 +2,7 @@ from Core.Player import Player
 from Protocols import Action, State
 from Actions import Move, PlaceFence
 from GameFlow import FenceChecker, MoveChecker
+from copy import copy
 
 class Board(State):
     
@@ -65,14 +66,15 @@ class Board(State):
         return actions
 
     def get_action_result(self, action: Action):
+        # print(self.fences_horizontal)
         new_board = Board(
             fence_checker = self.fence_checker,
             move_checker = self.move_checker,
             grid_size = self.grid_size,
-            player_positions = self.player_positions,
-            current_player = self.current_player,
-            fences_horizontal = self.fences_horizontal,
-            fences_vertical = self.fences_vertical
+            player_positions = copy(self.player_positions),
+            current_player = copy(self.current_player),
+            fences_horizontal = copy(self.fences_horizontal),
+            fences_vertical = copy(self.fences_vertical)
         )
         # print("Applied", action)
         if isinstance(action, Move):
@@ -83,7 +85,8 @@ class Board(State):
                 new_board.fences_horizontal.add((action.isHorizontal, action.coord))
             else:
                 new_board.fences_vertical.add((action.isHorizontal, action.coord))
-        
+        else:
+            print("UNKNOWN ACTION", action)
         new_board.toggle_player()  # Switch to the other player
         # print(self.player_positions)
         return new_board
@@ -104,10 +107,17 @@ class Board(State):
         )
     
     def __eq__(self, other):
-        return (self.player_positions == other.player_positions and
-                    self.fences_horizontal == other.fences_horizontal and
-                    self.fences_vertical == other.fences_vertical and
-                    self.current_player == other.current_player)
+        if self.player_positions != other.player_positions:
+           return False
+        
+        if self.fences_horizontal != other.fences_horizontal:
+            return False
+        
+        if self.fences_vertical == other.fences_vertical:
+            return False
+        
+        if self.current_player == other.current_player:
+            return False
     
     def __hash__(self):
         return hash(
@@ -121,4 +131,4 @@ class Board(State):
         max_p = self.player_positions[Player.MAX]
         min_p = self.player_positions[Player.MIN]
         
-        return f"{hash(self)} Board | MAX:{max_p} - MIN:{min_p} | {len(self.fences_horizontal)} | {len(self.fences_vertical)}"
+        return f"Board {self.current_player} | MAX:{max_p} - MIN:{min_p} | {len(self.fences_horizontal)} | {len(self.fences_vertical)}"
