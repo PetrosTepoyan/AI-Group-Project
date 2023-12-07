@@ -36,14 +36,10 @@ class MoveChecker:
 
     def is_fence_blocking(self, from_coord, to_coord, fences_horizontal, fences_vertical):
         if from_coord[0] == to_coord[0]:  # Vertical movement
-            same = (from_coord in fences_horizontal)
-            to_left = (left(from_coord) in fences_horizontal)
-            return same or to_left
-        else:  # Horizontal movement
-            same = (from_coord in fences_vertical) 
-            to_up = (up(from_coord) in fences_vertical)
-            # print(from_coord, to_coord, fences_vertical, same, to_up)
-            return same or to_up
+            return (from_coord if from_coord[1] < to_coord[1] else to_coord) in fences_horizontal
+        elif from_coord[1] == to_coord[1]:  # Horizontal movement
+            return (from_coord if from_coord[0] > to_coord[0] else to_coord) in fences_vertical
+        return None
             
 
     def jump_over_coords(self, player, opponent, fences_horizontal, fences_vertical, player_positions):
