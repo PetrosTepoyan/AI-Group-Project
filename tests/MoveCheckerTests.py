@@ -73,29 +73,29 @@ class TestMoveChecker(unittest.TestCase):
             )
         )
 
-    # def test_can_jump_over_direct(self):
-    #     player_positions = {Player.MIN: (2, 1), Player.MAX: (2, 2)}
-    #     fences_horizontal = set()
-    #     fences_vertical = set()
+    def test_can_jump_over_direct(self):
+        player_positions = {Player.MIN: (2, 1), Player.MAX: (2, 2)}
+        fences_horizontal = set()
+        fences_vertical = set()
 
-    #     self.assertEqual(
-    #         self.move_checker.jump_over_coords(
-    #             Player.MIN, Player.MAX, fences_horizontal, fences_vertical, player_positions
-    #         ),
-    #         set([(2, 3)])
-    #     )
+        self.assertEqual(
+            self.move_checker.jump_over_coords(
+                Player.MIN, Player.MAX, fences_horizontal, fences_vertical, player_positions
+            ),
+            set([(2, 3)])
+        )
 
-    # def test_can_jump_over_to_sides(self):
-    #     player_positions = {Player.MIN: (2, 1), Player.MAX: (2, 2)}
-    #     fences_horizontal = {(2, 2)}
-    #     fences_vertical = set()
+    def test_can_jump_over_to_sides(self):
+        player_positions = {Player.MIN: (2, 1), Player.MAX: (2, 2)}
+        fences_horizontal = {(2, 2)}
+        fences_vertical = set()
 
-    #     self.assertEqual(
-    #         self.move_checker.jump_over_coords(
-    #             Player.MIN, Player.MAX, fences_horizontal, fences_vertical, player_positions
-    #         ),
-    #         set([(1, 2), (3, 2)])
-    #     )
+        self.assertEqual(
+            self.move_checker.jump_over_coords(
+                Player.MIN, Player.MAX, fences_horizontal, fences_vertical, player_positions
+            ),
+            set([(1, 2), (3, 2)])
+        )
         
     def test_can_jump_over_to_one_side(self):
         player_positions = {Player.MIN: (2, 1), Player.MAX: (2, 2)}
@@ -105,7 +105,7 @@ class TestMoveChecker(unittest.TestCase):
         self.assertEqual(
             self.move_checker.jump_over_coords(
                 Player.MIN, Player.MAX,
-                fences_horizontal = set(), fences_vertical = set(), 
+                fences_horizontal, fences_vertical, 
                 player_positions = player_positions
             ),
             set([(1, 2), (3, 2)])
