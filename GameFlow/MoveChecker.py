@@ -31,21 +31,23 @@ class MoveChecker:
         return movable_coords
 
     def is_within_board(self, coord):
-            x, y = coord
-            return 0 <= x < self.board_size and 0 <= y < self.board_size
+        x, y = coord
+        return 0 <= x < self.board_size and 0 <= y < self.board_size
 
     def is_fence_blocking(self, from_coord, to_coord, fences_horizontal, fences_vertical):
         if from_coord[0] == to_coord[0]:  # Vertical movement
-            return (from_coord if from_coord[1] < to_coord[1] else to_coord) in fences_horizontal
+            top_one = from_coord if from_coord[1] < to_coord[1] else to_coord
+            return top_one in fences_horizontal or left(top_one) in fences_horizontal
         elif from_coord[1] == to_coord[1]:  # Horizontal movement
-            return (from_coord if from_coord[0] > to_coord[0] else to_coord) in fences_vertical
+            left_one = from_coord if from_coord[0] < to_coord[0] else to_coord
+            return left_one in fences_vertical or up(left_one) in fences_vertical
         return None
-            
+
 
     def jump_over_coords(self, player, opponent, fences_horizontal, fences_vertical, player_positions):
         player_coord = player_positions[player]
         opponent_coord = player_positions[opponent]
-        
+
         if player_coord[1] == opponent_coord[1]: # horizontally jumping
             if player_coord[0] == left(opponent_coord)[0]: # player is to the left
                 jump_coord_direct = (
@@ -59,7 +61,7 @@ class MoveChecker:
                 )
             else: # not next to each other
                 return set()
-            
+
             is_direct_jump_in_board = self.is_within_board(jump_coord_direct)
             is_direct_jump_not_blocked = not self.is_fence_blocking(
                 opponent_coord, jump_coord_direct,
@@ -68,13 +70,13 @@ class MoveChecker:
             if is_direct_jump_in_board and is_direct_jump_not_blocked:
                  # if able to jump directly, do so
                 return set([jump_coord_direct])
-            
+
             # otherwise, try diag jump
             jump_coord_up = (
                 opponent_coord[0],
                 opponent_coord[1] - 1
             )
-            
+
             jump_coord_down = (
                 opponent_coord[0],
                 opponent_coord[1] + 1
@@ -88,16 +90,16 @@ class MoveChecker:
                 )
                 if is_diag_jump_in_board and is_diag_jump_not_blocked:
                     return_coords.add(jump_coord)
-                    
+
             return return_coords
-        
+
         elif player_coord[0] == opponent_coord[0]: # vertically jumping
             if player_coord[1] == up(opponent_coord)[1]: # player is above
                 jump_coord_direct = (
                     opponent_coord[0],
                     opponent_coord[1] + 1
                 )
-                
+
             elif player_coord[1] == down(opponent_coord)[1]:
                 jump_coord_direct = (
                     opponent_coord[0],
@@ -105,21 +107,21 @@ class MoveChecker:
                 )
             else:
                 return set()
-            
+
             is_direct_jump_in_board = self.is_within_board(jump_coord_direct)
             is_direct_jump_not_blocked = not self.is_fence_blocking(
                 opponent_coord, jump_coord_direct,
                 fences_horizontal, fences_vertical
             )
-            
+
             if is_direct_jump_in_board and is_direct_jump_not_blocked:
                  # if able to jump directly, do so
                 return set([jump_coord_direct])
-            
+
             # otherwise, try diag jump
             jump_coord_left = left(opponent_coord)
             jump_coord_right = right(opponent_coord)
-            
+
             return_coords = set()
             # print()
             for jump_coord in [jump_coord_left, jump_coord_right]:
@@ -129,12 +131,15 @@ class MoveChecker:
                     fences_horizontal, fences_vertical
                 )
                 # print("TT", opponent_coord, jump_coord, is_diag_jump_in_board, is_diag_jump_blocked, fences_vertical)
-                
+
                 if is_diag_jump_in_board and not is_diag_jump_blocked:
                     return_coords.add(jump_coord)
-                    
+
             return return_coords
             
+            
+            
+
             
         return set()
 
