@@ -12,16 +12,18 @@ class TestMoveChecker(unittest.TestCase):
         self.board_size = 9
         self.move_checker = MoveChecker(self.board_size)
         
-    def test_cant_jump_over_not_next_to_each_other(self):
+    def test_movable_coords_at_top(self):
         player_positions = {Player.MIN: (4, 0), Player.MAX: (4, 8)}
         self.assertEqual(
-            self.move_checker.jump_over_coords(
+            self.move_checker.get_movable_coords(
                 Player.MIN, Player.MAX,
                 fences_horizontal = set(), fences_vertical = set(), 
                 player_positions = player_positions
             ),
-            set()
+            {(3, 0), (5, 0), (4, 1)}
         )
+        
+        
 
 # Add more tests as needed to cover all scenarios
 

@@ -6,6 +6,9 @@ class Move(Action):
         self.from_coord = from_coord
         self.to_coord = to_coord
         
+    def __repr__(self):
+        return f"Move | {self.from_coord} {self.to_coord}"
+        
     def __eq__(self, other):
         if isinstance(other, Move):
             return self.from_coord == other.from_coord and self.to_coord == other.to_coord

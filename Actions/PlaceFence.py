@@ -13,3 +13,7 @@ class PlaceFence(Action):
     
     def __hash__(self):
         return hash((self.isHorizontal, self.coord))
+    
+    def __repr__(self):
+        direction = "H" if self.isHorizontal else "V"
+        return f"PlaceFence | {direction} at {self.coord}"

@@ -1,40 +1,21 @@
 from math import inf
-
-class Search:
-    
-    def __init__(self, optimized = False):
-        # We will hold the number of nodes as a variable and return in the function below
-        self._number_of_generated_states = 0
-        self.state_utilities = {}
-        self.optimized = optimized
-        
-    def max_value(self, state, terminal_test, strategy):
-        self._number_of_generated_states = 0
-        pass
-    
-    def min_value(self, state, terminal_test, strategy):
-        self._number_of_generated_states = 0
-        pass
-        
-    def find_strategy(self, initial_state, terminal_test):
-        pass
-    
-    # This function will simply return the instance member. 
-    def number_of_generated_states(self):
-        return self._number_of_generated_states    
+from Protocols import Search
+from Core import Player
 
 class MinimaxSearch(Search):
     
     def find_strategy(self, initial_state, terminal_test):
         self.state_utilities = {}
+        self.visited_states = set()
         strategy = {}
         self._number_of_generated_states = 0
         self.max_value(initial_state, terminal_test, strategy)
+        
         return strategy
 
     def max_value(self, state, terminal_test, strategy):
         # We check if it is the optimized version that we are calling. If yes, we keep (state, utility) pairs
-        if self.optimized and state in self.state_utilities:
+        if state in self.state_utilities:
             return self.state_utilities[state]
         
         # Check for the terminal state. If it is, we store the utility and return it
@@ -47,13 +28,21 @@ class MinimaxSearch(Search):
         # Explanation can be found from the pseudocode
         v = -inf
         move = None
-        
         # Loop through available actions
         actions = state.get_applicable_actions()
+        # print(len(actions), len(state.fences_horizontal), len(state.fences_vertical))
+        # print(len(actions), state.player_positions[Player.MAX], state.player_positions[Player.MIN])
         for action in actions:
             # Generate new state and increment the number of generated states
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
+            
+            if new_state in self.visited_states:
+                # print("repeated state", new_state)
+                self.state_utilities[new_state] = 0
+                continue
+            
+            self.visited_states.add(new_state)
             
             # Recursive call to min_value
             v2 = self.min_value(new_state, terminal_test, strategy)
@@ -62,6 +51,8 @@ class MinimaxSearch(Search):
             if v2 > v:
                 v = v2
                 move = action
+                
+            self.state_utilities[new_state] = v
         
         # At the end we store the pairs (state, action) and (state, utility)
         strategy[state] = move
@@ -71,7 +62,7 @@ class MinimaxSearch(Search):
     
     # Implementation and the explanation is nearly identical to the one above.
     def min_value(self, state, terminal_test, strategy):
-        if self.optimized and state in self.state_utilities:
+        if state in self.state_utilities:
             return self.state_utilities[state]
         
         if terminal_test.is_terminal(state):
@@ -85,16 +76,24 @@ class MinimaxSearch(Search):
         
         actions = state.get_applicable_actions()
 
-        #print("How many actions", len(actions))
-
+        # print("How many actions", len(actions))
+        # print("MIN_VALUE")
+        # print(len(actions), state.player_positions[Player.MAX], state.player_positions[Player.MIN])
         for action in actions:
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
+            
+            if new_state in self.visited_states:
+                # print("repeated state", new_state)
+                self.state_utilities[new_state] = 0
+                continue
+            
+            self.visited_states.add(new_state)
+            
             v2 = self.max_value(new_state, terminal_test, strategy)
             if v2 < v:
                 v = v2
                 move = action
-                  
         
         strategy[state] = move
         self.state_utilities[new_state] = v  
@@ -112,7 +111,7 @@ class AlphaBetaSearch(Search):
 
     def max_value(self, state, terminal_test, alpha, beta, strategy):
         
-        if self.optimized and state in self.state_utilities:
+        if state in self.state_utilities:
             return self.state_utilities[state]
         
         if terminal_test.is_terminal(state):
@@ -153,7 +152,7 @@ class AlphaBetaSearch(Search):
     # Analogically to the method above, we implement min_value method
     def min_value(self, state, terminal_test, alpha, beta, strategy):
         
-        if self.optimized and state in self.state_utilities:
+        if state in self.state_utilities:
             return self.state_utilities[state]
         
         if terminal_test.is_terminal(state):

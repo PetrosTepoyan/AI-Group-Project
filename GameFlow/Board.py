@@ -27,8 +27,8 @@ class Board(State):
             }
         else:
             self.player_positions = player_positions
-            
         self.current_player = current_player
+        self.current_opponent = Player.MIN if current_player == Player.MAX else Player.MAX # for convenience
         self.fences_horizontal = fences_horizontal
         self.fences_vertical = fences_vertical
 
@@ -37,23 +37,30 @@ class Board(State):
     
     def toggle_player(self):
         self.current_player = self.current_player.toggle()
+        self.current_opponent = self.current_opponent.toggle()
     
     def get_applicable_actions(self):
         actions = []
         # Calculate possible moves for the pawn
-        current_pos = self.player_positions[self.get_player()]
-        for direction in [(0, 1), (1, 0), (0, -1), (-1, 0)]:  # down, right, up, left
-            new_pos = (current_pos[0] + direction[0], current_pos[1] + direction[1])
-            if self.is_move_valid(current_pos, new_pos):
-                actions.append(Move(current_pos, new_pos))
+        current_pos = self.player_positions[self.current_player]
+        movable_coords = self.get_movable_coords()
+        for coord in movable_coords:
+            move = Move(
+                from_coord = current_pos,
+                to_coord = coord
+            )
+            actions.append(move)
         
         # Calculate possible fence placements
         for i in range(self.grid_size - 1):
             for j in range(self.grid_size - 1):
-                if self.can_place_fence((i, j), True):
-                    actions.append(PlaceFence(True, (i, j)))
-                if self.can_place_fence((i, j), False):
-                    actions.append(PlaceFence(False, (i, j)))
+                placing_coord = (i, j)
+                if self.can_place_fence(placing_coord, True):
+                    action = PlaceFence(True, placing_coord)
+                    actions.append(action)
+                if self.can_place_fence(placing_coord, False):
+                    action = PlaceFence(False, placing_coord)
+                    actions.append(action)
 
         return actions
 
@@ -67,22 +74,51 @@ class Board(State):
             fences_horizontal = self.fences_horizontal,
             fences_vertical = self.fences_vertical
         )
+        # print("Applied", action)
         if isinstance(action, Move):
             # Assume it's the current player's move
-            new_board.player_positions[new_board.get_player()] = action.to_coord
+            new_board.player_positions[self.current_player] = action.to_coord
         elif isinstance(action, PlaceFence):
-            new_board.fences.add((action.isHorizontal, action.coord))
+            if action.isHorizontal:
+                new_board.fences_horizontal.add((action.isHorizontal, action.coord))
+            else:
+                new_board.fences_vertical.add((action.isHorizontal, action.coord))
         
         new_board.toggle_player()  # Switch to the other player
-        
+        # print(self.player_positions)
         return new_board
     
+    def can_place_fence(self, placing_coord, is_horizontal):
+        return self.fence_checker.can_place_fence(
+            placing_coord,
+            is_horizontal,
+            fences_horizontal = self.fences_horizontal,
+            fences_vertical = self.fences_vertical
+        )
+    
+    def get_movable_coords(self):
+        return self.move_checker.get_movable_coords(
+            self.current_player, self.current_opponent,
+            fences_vertical = self.fences_vertical, fences_horizontal = self.fences_horizontal, 
+            player_positions = self.player_positions
+        )
+    
     def __eq__(self, other):
-        if isinstance(other, Board):
-            return (self.player_positions == other.player_positions and
-                    self.fences == other.fences and
+        return (self.player_positions == other.player_positions and
+                    self.fences_horizontal == other.fences_horizontal and
+                    self.fences_vertical == other.fences_vertical and
                     self.current_player == other.current_player)
-        return False
     
     def __hash__(self):
-        return hash((frozenset(self.player_positions.items()), frozenset(self.fences), self.current_player))
+        return hash(
+            (frozenset(self.player_positions.items()),
+             frozenset(self.fences_horizontal), 
+             frozenset(self.fences_vertical),
+             self.current_player)
+        )
+
+    def __repr__(self):
+        max_p = self.player_positions[Player.MAX]
+        min_p = self.player_positions[Player.MIN]
+        
+        return f"{hash(self)} Board | MAX:{max_p} - MIN:{min_p} | {len(self.fences_horizontal)} | {len(self.fences_vertical)}"
