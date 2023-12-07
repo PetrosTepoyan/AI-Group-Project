@@ -61,15 +61,59 @@ class TestMoveChecker(unittest.TestCase):
         fences_horizontal = {}
         fences_vertical = {(2, 1)}
 
-        self.assertFalse(
+        # From Left to right
+        self.assertTrue(
             self.move_checker.is_fence_blocking(
                 (2, 1), (3, 1), fences_horizontal, fences_vertical
             )
         )
         
-        self.assertFalse(
+        self.assertTrue(
             self.move_checker.is_fence_blocking(
                 (2, 2), (3, 2), fences_horizontal, fences_vertical
+            )
+        )
+        
+        # From right to left
+        self.assertTrue(
+            self.move_checker.is_fence_blocking(
+                (3, 1), (2, 1), fences_horizontal, fences_vertical
+            )
+        )
+        
+        self.assertTrue(
+            self.move_checker.is_fence_blocking(
+                (3, 2), (2, 2), fences_horizontal, fences_vertical
+            )
+        )
+        
+        # FALSE
+        self.assertFalse(
+            self.move_checker.is_fence_blocking(
+                (2, 1), (1, 1), fences_horizontal, fences_vertical
+            )
+        )
+        
+        self.assertFalse(
+            self.move_checker.is_fence_blocking(
+                (2, 2), (1, 2), fences_horizontal, fences_vertical
+            )
+        )
+        
+        
+    def test_is_horizontal_fence_blocking_vertical_movement(self):
+        fences_horizontal = {(2, 1)}
+        fences_vertical = {}
+
+        self.assertTrue(
+            self.move_checker.is_fence_blocking(
+                (2, 1), (2, 2), fences_horizontal, fences_vertical
+            )
+        )
+        
+        self.assertTrue(
+            self.move_checker.is_fence_blocking(
+                (3, 1), (3, 2), fences_horizontal, fences_vertical
             )
         )
 
@@ -108,7 +152,7 @@ class TestMoveChecker(unittest.TestCase):
                 fences_horizontal, fences_vertical, 
                 player_positions = player_positions
             ),
-            set([(1, 2), (3, 2)])
+            set([(1, 2)])
         )
 
 # Add more tests as needed to cover all scenarios
