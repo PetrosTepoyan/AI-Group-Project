@@ -25,11 +25,14 @@ class DLMinimaxSearch:
 
     def max_value(self, state, terminal_test, strategy, depth):
         
-        if depth == 0 or terminal_test.is_terminal(state):
-            return self.heuristic(state)
-        
         if state in self.state_utilities:
             return self.state_utilities[state]
+        
+        if depth == 0:
+            utility = -self.heuristic(state)
+            strategy[state] = None
+            self.state_utilities[state] = utility
+            return utility
         
         if terminal_test.is_terminal(state):
             utility = terminal_test.utility(state)
@@ -72,11 +75,13 @@ class DLMinimaxSearch:
     
     def min_value(self, state, terminal_test, strategy, depth):
         
-        if depth == 0 or terminal_test.is_terminal(state):
-            return self.heuristic(state)
-        
         if state in self.state_utilities:
             return self.state_utilities[state]
+        
+        if depth == 0:
+            utility = self.heuristic(state)
+            strategy[state] = None
+            self.state_utilities[state] = utility
         
         if terminal_test.is_terminal(state):
             utility = terminal_test.utility(state)

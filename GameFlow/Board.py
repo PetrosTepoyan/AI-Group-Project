@@ -14,7 +14,8 @@ class Board(State):
         player_positions: dict = None,
         current_player: Player = Player.MAX,
         fences_horizontal = set(),
-        fences_vertical = set()
+        fences_vertical = set(),
+        disable_turn = False
     ):
         
         self.fence_checker = fence_checker
@@ -33,6 +34,7 @@ class Board(State):
         self.fences_horizontal = fences_horizontal
         self.fences_vertical = fences_vertical
         self.max_fences = int(self.grid_size * self.grid_size * (10/81))
+        self.disable_turn = disable_turn
 
     def get_player(self) -> Player:
         return self.current_player
@@ -52,9 +54,8 @@ class Board(State):
                 to_coord = coord
             )
             actions.append(move)
-        
         # Calculate possible fence placements
-        if len(self.fences_horizontal) + len(self.fences_vertical) <= self.max_fences:
+        if (len(self.fences_horizontal) + len(self.fences_vertical) <= self.max_fences) and self.disable_turn == False:
             for i in range(self.grid_size - 1):
                 for j in range(self.grid_size - 1):
                     placing_coord = (i, j)
@@ -76,7 +77,8 @@ class Board(State):
             player_positions = copy(self.player_positions),
             current_player = copy(self.current_player),
             fences_horizontal = copy(self.fences_horizontal),
-            fences_vertical = copy(self.fences_vertical)
+            fences_vertical = copy(self.fences_vertical),
+            disable_turn=self.disable_turn
         )
         # print("Applied", action)
         if isinstance(action, Move):
@@ -89,8 +91,10 @@ class Board(State):
                 new_board.fences_vertical.add(action.coord)
         else:
             print("UNKNOWN ACTION", action)
-        new_board.toggle_player()  # Switch to the other player
-        # print(self.player_positions)
+            
+        if self.disable_turn == False:
+            # Switch to the other player
+            new_board.toggle_player()  
         return new_board
     
     def can_place_fence(self, placing_coord, is_horizontal):

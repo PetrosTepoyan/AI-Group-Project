@@ -1,15 +1,6 @@
 from GameFlow import Board
 from Core import Player
-
-class TerminalTest:
-    def __init__(self):
-        self._utilities = {}
-
-    def utility(self, state):
-        pass
-
-    def is_terminal(self, state):
-        pass
+from Protocols import TerminalTest
 
 class BoardTerminalTest(TerminalTest):
     

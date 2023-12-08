@@ -53,6 +53,16 @@ class UIBoard:
             print(col_line)
             
         print("  " + "-" * (self.board_size * 4 + 1))
+        
+    @staticmethod
+    def pring_board(board):
+        ui_board = UIBoard(
+            board_size = board.grid_size,
+            fences_horizontal = board.fences_horizontal, 
+            fences_vertical = board.fences_vertical,
+            player_positions = board.player_positions
+        )
+        ui_board.print()
 
 def left(coord):
     return (coord[0] - 1, coord[1])
