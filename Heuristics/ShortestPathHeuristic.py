@@ -9,8 +9,8 @@ class ShortestPathHeuristic:
     def __init__(self):
         self.distance_heuristic = DistanceHeuristic()
 
-    """Shortest-path heuristic """
     def __call__(self, board: Board, print_path: bool = False):
+        """Shortest-path heuristic """
         board_copy = deepcopy(board)
         player = board_copy.current_player
         target_line = board_copy.grid_size - 1 if player == Player.MAX else 0

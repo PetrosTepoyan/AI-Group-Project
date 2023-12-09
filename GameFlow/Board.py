@@ -23,7 +23,7 @@ class Board(State):
         mid_point = grid_size // 2
         if player_positions is None:
             self.player_positions = {
-                Player.MAX: (mid_point, 0),                           # Player.MAX starts at the top row
+                Player.MAX: (mid_point, 0),              # Player.MAX starts at the top row
                 Player.MIN: (mid_point, grid_size - 1)   # Player.MIN starts at the bottom row
             }
         else:

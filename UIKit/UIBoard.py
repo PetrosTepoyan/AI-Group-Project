@@ -55,7 +55,7 @@ class UIBoard:
         print("  " + "-" * (self.board_size * 4 + 1))
         
     @staticmethod
-    def pring_board(board):
+    def print_board(board):
         ui_board = UIBoard(
             board_size = board.grid_size,
             fences_horizontal = board.fences_horizontal, 
