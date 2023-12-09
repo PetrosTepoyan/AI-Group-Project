@@ -10,7 +10,7 @@ class Board(State):
     def __init__(self,
                  fence_checker: FenceChecker,
                  move_checker: MoveChecker,
-                 grid_size = 9,
+                 grid_size,
                  player_positions: dict = None,
                  current_player: Player = Player.MAX,
                  fences_horizontal: set[tuple[int, int]] = None,
@@ -74,6 +74,7 @@ class Board(State):
     def get_action_result(self, action: Action) -> 'Board':
         new_board = Board(fence_checker = self.fence_checker,
                           move_checker = self.move_checker,
+                          grid_size = self.grid_size,
                           player_positions = copy(self.player_positions),
                           current_player = copy(self.current_player),
                           fences_horizontal = copy(self.fences_horizontal),
@@ -98,7 +99,7 @@ class Board(State):
 
     def can_place_fence(self, placing_coord, is_horizontal) -> bool:
         """Takes in a cell and fence orientation. Returns true if a fence is deployable"""
-        return self.fence_checker.can_place_fence(placing_coord, is_horizontal,
+        return self.fence_checker.can_place_fence(self, placing_coord, is_horizontal,
                                                   fences_horizontal = self.fences_horizontal,
                                                   fences_vertical = self.fences_vertical)
 

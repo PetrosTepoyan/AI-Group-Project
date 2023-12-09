@@ -1,0 +1,21 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is '/Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/Report.blg'
+[64] biber-darwin:340> INFO - === Sun Nov 19, 2023, 18:13:58
+[78] Biber.pm:419> INFO - Reading '/Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/Report.bcf'
+[151] Biber.pm:979> INFO - Found 7 citekeys in bib section 0
+[165] Biber.pm:4419> INFO - Processing section 0
+[174] Biber.pm:4610> INFO - Looking for bibtex file 'Report.bib' for section 0
+[175] bibtex.pm:1713> INFO - LaTeX decoding ...
+[181] bibtex.pm:1519> INFO - Found BibTeX data source 'Report.bib'
+[223] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[223] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[223] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[223] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[230] bbl.pm:660> INFO - Writing '/Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/Report.bbl' with encoding 'UTF-8'
+[232] bbl.pm:763> INFO - Output to /Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/Report.bbl
+[233] Biber.pm:131> WARN - legacy year field 'Accessed in 2023' in entry 'monte_carlo' is not an integer - this will probably not sort properly.
+[233] Biber.pm:131> WARN - legacy year field 'Accessed in 2023' in entry 'python_but_worse' is not an integer - this will probably not sort properly.
+[233] Biber.pm:131> WARN - legacy year field 'Accessed in 2023' in entry 'retrograde' is not an integer - this will probably not sort properly.
+[233] Biber.pm:131> WARN - legacy year field 'Accessed in 2023' in entry 'javascript' is not an integer - this will probably not sort properly.
+[233] Biber.pm:131> WARN - legacy year field 'Accessed in 2023' in entry 'closest_impl' is not an integer - this will probably not sort properly.
+[233] Biber.pm:133> INFO - WARNINGS: 5

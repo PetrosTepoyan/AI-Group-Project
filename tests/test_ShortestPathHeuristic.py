@@ -12,7 +12,7 @@ class TestShortestPathHeuristic(unittest.TestCase):
 
     def setUp(self):
         self.board_size = 5
-        self.board = Board(FenceChecker(grid_size=self.board_size, fence_length=2), MoveChecker(), self.board_size)
+        self.board = Board(FenceChecker(fence_length=2), MoveChecker(), self.board_size)
 
     def test_no_fences(self):
         self.assertEqual(ShortestPathHeuristic()(board=self.board), 4)

@@ -11,7 +11,7 @@ class TestMoveChecker(unittest.TestCase):
     def setUp(self):
         self.board_size = 9
         self.move_checker = MoveChecker()
-        self.board = Board(FenceChecker(self.board_size, 2), self.move_checker)
+        self.board = Board(FenceChecker(fence_length=2), self.move_checker, grid_size=self.board_size)
 
     def test_movable_coords_at_top(self):
         player_coord = (4, 0)

@@ -1,0 +1,5 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is '/Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/.texpadtmp/Report.blg'
+[50] biber-darwin:340> INFO - === Sun Nov 19, 2023, 15:12:50
+[61] Utils.pm:410> ERROR - /Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/.texpadtmp/Report.bcf is malformed, last biblatex run probably failed. Deleted /Users/petrostepoyan/Desktop/Education/AI2/AI-Group-Project/Report/.texpadtmp/Report.bbl
+[61] Biber.pm:136> INFO - ERRORS: 1

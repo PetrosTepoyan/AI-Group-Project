@@ -80,7 +80,9 @@ class DLAlphaBetaSearch(Search):
 
         if move is None:
             print(state, len(actions))
-
+        else:
+            strategy[state] = move
+            
         return v
 
     # Analogically to the method above, we implement min_value method
@@ -134,8 +136,9 @@ class DLAlphaBetaSearch(Search):
 
         if move is None:
             print(state, len(actions))
-
-        strategy[state] = move
+        else:
+            strategy[state] = move
+            
         self.state_utilities[new_state] = v  
 
         return v

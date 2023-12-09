@@ -1,0 +1,197 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Wikipedia_Quoridor}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2023-11-19}
+      \field{title}{Quoridor - Wikipedia}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Quoridor
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Quoridor
+      \endverb
+    \endentry
+    \entry{ai_agent}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=c4199e359d90cd186b13b3ffa27b323c}{%
+           family={Guy\bibnamedelima Tsur},
+           familyi={G\bibinitperiod\bibinitdelim T\bibinitperiod},
+           given={Yotam\bibnamedelima Segev},
+           giveni={Y\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c4199e359d90cd186b13b3ffa27b323c}
+      \strng{fullhash}{c4199e359d90cd186b13b3ffa27b323c}
+      \strng{bibnamehash}{c4199e359d90cd186b13b3ffa27b323c}
+      \strng{authorbibnamehash}{c4199e359d90cd186b13b3ffa27b323c}
+      \strng{authornamehash}{c4199e359d90cd186b13b3ffa27b323c}
+      \strng{authorfullhash}{c4199e359d90cd186b13b3ffa27b323c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.cs.huji.ac.il/w~ai/projects/2012/Quoridor/files/report.pdf}}
+      \field{note}{Accessed: 2023-11-19}
+      \field{title}{Quoridor - Strategy Board Game}
+      \field{year}{2012}
+    \endentry
+    \entry{monte_carlo}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=485a39bc102c7eef7388d3f083ed942c}{%
+           family={Victor\bibnamedelimb Massagué\bibnamedelima Respall},
+           familyi={V\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Hamna\bibnamedelima Aslam},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod},
+           suffix={Joseph\bibnamedelimb Alexander\bibnamedelima Brown},
+           suffixi={J\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{485a39bc102c7eef7388d3f083ed942c}
+      \strng{fullhash}{485a39bc102c7eef7388d3f083ed942c}
+      \strng{bibnamehash}{485a39bc102c7eef7388d3f083ed942c}
+      \strng{authorbibnamehash}{485a39bc102c7eef7388d3f083ed942c}
+      \strng{authornamehash}{485a39bc102c7eef7388d3f083ed942c}
+      \strng{authorfullhash}{485a39bc102c7eef7388d3f083ed942c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Monte Carlo Tree Search for Quoridor}
+      \field{year}{Accessed in 2023}
+      \verb{urlraw}
+      \verb https://www.researchgate.net/profile/Joseph-Brown-33/publication/327679826_Monte_Carlo_Tree_Search_for_Quoridor/links/5b9e5b7692851ca9ed0f6eb9/Monte-Carlo-Tree-Search-for-Quoridor.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.researchgate.net/profile/Joseph-Brown-33/publication/327679826_Monte_Carlo_Tree_Search_for_Quoridor/links/5b9e5b7692851ca9ed0f6eb9/Monte-Carlo-Tree-Search-for-Quoridor.pdf
+      \endverb
+    \endentry
+    \entry{python_but_worse}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=0f2a313d756de8bf6a5686f79b04ac38}{%
+           family={Karanfilovic},
+           familyi={K\bibinitperiod},
+           given={Dimitrije},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{0f2a313d756de8bf6a5686f79b04ac38}
+      \strng{fullhash}{0f2a313d756de8bf6a5686f79b04ac38}
+      \strng{bibnamehash}{0f2a313d756de8bf6a5686f79b04ac38}
+      \strng{authorbibnamehash}{0f2a313d756de8bf6a5686f79b04ac38}
+      \strng{authornamehash}{0f2a313d756de8bf6a5686f79b04ac38}
+      \strng{authorfullhash}{0f2a313d756de8bf6a5686f79b04ac38}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Bots for the board game Quoridor implemented using various algorithms}
+      \field{year}{Accessed in 2023}
+      \verb{urlraw}
+      \verb https://github.com/dimitrijekaranfilovic/quoridor
+      \endverb
+      \verb{url}
+      \verb https://github.com/dimitrijekaranfilovic/quoridor
+      \endverb
+    \endentry
+    \entry{retrograde}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=e96fa4a2a34cfd6c5e6718090b21a5ef}{%
+           family={Iwanaga},
+           familyi={I\bibinitperiod},
+           given={Makuro},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{e96fa4a2a34cfd6c5e6718090b21a5ef}
+      \strng{fullhash}{e96fa4a2a34cfd6c5e6718090b21a5ef}
+      \strng{bibnamehash}{e96fa4a2a34cfd6c5e6718090b21a5ef}
+      \strng{authorbibnamehash}{e96fa4a2a34cfd6c5e6718090b21a5ef}
+      \strng{authornamehash}{e96fa4a2a34cfd6c5e6718090b21a5ef}
+      \strng{authorfullhash}{e96fa4a2a34cfd6c5e6718090b21a5ef}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Quoridor Research}
+      \field{year}{Accessed in 2023}
+      \verb{urlraw}
+      \verb https://cir.nii.ac.jp/crid/1390015333257577728
+      \endverb
+      \verb{url}
+      \verb https://cir.nii.ac.jp/crid/1390015333257577728
+      \endverb
+    \endentry
+    \entry{javascript}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=83ffea83c0ef46e0d7a00c57ca23ec77}{%
+           family={Gorisanson},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{83ffea83c0ef46e0d7a00c57ca23ec77}
+      \strng{fullhash}{83ffea83c0ef46e0d7a00c57ca23ec77}
+      \strng{bibnamehash}{83ffea83c0ef46e0d7a00c57ca23ec77}
+      \strng{authorbibnamehash}{83ffea83c0ef46e0d7a00c57ca23ec77}
+      \strng{authornamehash}{83ffea83c0ef46e0d7a00c57ca23ec77}
+      \strng{authorfullhash}{83ffea83c0ef46e0d7a00c57ca23ec77}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{quoridor-ai: Quoridor AI based on Monte Carlo Tree Search}
+      \field{year}{Accessed in 2023}
+      \verb{urlraw}
+      \verb https://github.com/gorisanson/quoridor-ai
+      \endverb
+      \verb{url}
+      \verb https://github.com/gorisanson/quoridor-ai
+      \endverb
+    \endentry
+    \entry{closest_impl}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=936476a4a47e08c089d85781e42738ce}{%
+           family={Rinder},
+           familyi={R\bibinitperiod},
+           given={Alain},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{936476a4a47e08c089d85781e42738ce}
+      \strng{fullhash}{936476a4a47e08c089d85781e42738ce}
+      \strng{bibnamehash}{936476a4a47e08c089d85781e42738ce}
+      \strng{authorbibnamehash}{936476a4a47e08c089d85781e42738ce}
+      \strng{authornamehash}{936476a4a47e08c089d85781e42738ce}
+      \strng{authorfullhash}{936476a4a47e08c089d85781e42738ce}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{quoridor.py: Python implementation of the Quoridor game}
+      \field{year}{Accessed in 2023}
+      \verb{urlraw}
+      \verb https://github.com/alainrinder/quoridor.py/tree/master
+      \endverb
+      \verb{url}
+      \verb https://github.com/alainrinder/quoridor.py/tree/master
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

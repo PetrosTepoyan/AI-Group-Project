@@ -1,5 +1,5 @@
 from GameFlow import Board, BoardTerminalTest, FenceChecker, MoveChecker
-from Search import DLAlphaBetaSearch
+from Search import DLAlphaBetaSearch, MinimaxSearch, AlphaBetaSearch
 from Core import Player
 from Heuristics import ShortestPathHeuristic
 from copy import deepcopy
@@ -11,7 +11,10 @@ class Versus:
         self.max_depth_level = max_depth_level
         self.min_depth_level = min_depth_level
         self.grid_size = grid_size
-        self.board = Board(FenceChecker(grid_size=self.grid_size, fence_length=2), MoveChecker(), self.grid_size)
+        
+        fence_checker = FenceChecker(fence_length=2, should_check_for_obscured_path = True)
+        move_checker = MoveChecker()
+        self.board = Board(fence_checker, move_checker, self.grid_size)
         self.terminal_test = BoardTerminalTest()
 
     def start(self) -> None:
@@ -20,15 +23,14 @@ class Versus:
 
         heuristic = ShortestPathHeuristic()
         
-        
         while not self.terminal_test.is_terminal(tmp_board):
 
             UIBoard.print_board(tmp_board)
 
-            max_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = 5, heuristic = heuristic)
+            max_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.max_depth_level, heuristic = heuristic)
             max_strategy = max_search.find_strategy(tmp_board, self.terminal_test)
 
-            min_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = 3, heuristic = heuristic)
+            min_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.min_depth_level, heuristic = heuristic)
             min_strategy = min_search.find_strategy(tmp_board, self.terminal_test)  
 
             if tmp_board.current_player == Player.MAX:
