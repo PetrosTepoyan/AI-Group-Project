@@ -1,6 +1,8 @@
 from copy import deepcopy
 from math import inf
 from Protocols import Search
+from Core import Player
+from UIKit import UIBoard
 
 class DLAlphaBetaSearch(Search):
     """Depth-Limited version of Classic Alpha-Beta Search"""
@@ -13,7 +15,8 @@ class DLAlphaBetaSearch(Search):
         self.state_utilities = {}
         self.visited_states = set()
         self._number_of_generated_states = 0
-        self.max_value(
+        root_function = self.max_value if initial_state.current_player is Player.MAX else self.min_value
+        root_function(
             deepcopy(initial_state),
             terminal_test,
             -inf, inf,
@@ -23,6 +26,8 @@ class DLAlphaBetaSearch(Search):
         return strategy
 
     def max_value(self, state, terminal_test, alpha, beta, strategy, depth):
+        print("MAX node: state")
+        UIBoard.print_board(state)
         if state in self.state_utilities:
             return self.state_utilities[state]
 
@@ -60,6 +65,7 @@ class DLAlphaBetaSearch(Search):
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
             v2 = self.min_value(new_state, terminal_test, alpha_1, beta, strategy, depth - 1)
+            print(f"min_value for action {action} is {v2}")
 
             if v2 > v:
                 v = v2
@@ -79,14 +85,16 @@ class DLAlphaBetaSearch(Search):
         self.state_utilities[new_state] = v
 
         if move is None:
-            print(state, len(actions))
+            print("move is None in max_value", state, len(actions))
         else:
             strategy[state] = move
-            
+
         return v
 
     # Analogically to the method above, we implement min_value method
     def min_value(self, state, terminal_test, alpha, beta, strategy, depth):
+        print(f"MIN node:")
+        UIBoard.print_board(state)
         if state in self.state_utilities:
             return self.state_utilities[state]
 
@@ -122,6 +130,7 @@ class DLAlphaBetaSearch(Search):
             new_state = state.get_action_result(action)
             self._number_of_generated_states += 1
             v2 = self.max_value(new_state, terminal_test, alpha, beta_1, strategy, depth - 1)
+            print(f"max_value for action {action} is {v2}")
 
             if v2 < v:
                 v = v2
@@ -135,7 +144,7 @@ class DLAlphaBetaSearch(Search):
                 return v
 
         if move is None:
-            print(state, len(actions))
+            print("move is None in min_value", state, len(actions))
         else:
             strategy[state] = move
             
