@@ -10,7 +10,7 @@ class TestMoveChecker(unittest.TestCase):
 
     def setUp(self):
         self.board_size = 9
-        self.move_checker = MoveChecker(self.board_size)
+        self.move_checker = MoveChecker()
         self.board = Board(FenceChecker(self.board_size, 2), self.move_checker)
 
     def test_movable_coords_at_top(self):
@@ -18,6 +18,7 @@ class TestMoveChecker(unittest.TestCase):
         opponent_coord = (4, 8)
         self.assertEqual(
             self.move_checker.get_movable_coords(
+                self.board,
                 player_coord, opponent_coord
             ),
             {(3, 0), (5, 0), (4, 1)}
@@ -28,6 +29,7 @@ class TestMoveChecker(unittest.TestCase):
         opponent_coord = (4, 8)
         self.assertEqual(
             self.move_checker.get_movable_coords(
+                self.board, 
                 player_coord, opponent_coord
             ),
             {(7, 0), (8, 1)}
@@ -38,6 +40,7 @@ class TestMoveChecker(unittest.TestCase):
         opponent_coord = (4, 8)
         self.assertEqual(
             self.move_checker.get_movable_coords(
+                self.board,
                 player_coord, opponent_coord
             ),
             {(4, 0), (4, 2), (3, 1), (5, 1)}
@@ -50,6 +53,7 @@ class TestMoveChecker(unittest.TestCase):
 
         self.assertTrue(
             self.move_checker.is_fence_blocking(
+                self.board,
                 (1, 1), (1, 0)
             )
         )

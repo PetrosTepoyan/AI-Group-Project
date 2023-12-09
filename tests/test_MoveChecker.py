@@ -9,7 +9,7 @@ class TestMoveChecker(unittest.TestCase):
 
     def setUp(self):
         self.board_size = 9
-        self.move_checker = MoveChecker(self.board_size)
+        self.move_checker = MoveChecker()
         self.board = Board(FenceChecker(grid_size=self.board_size, fence_length=2), self.move_checker)
 
     def test_cant_jump_over_not_next_to_each_other(self):
@@ -17,37 +17,37 @@ class TestMoveChecker(unittest.TestCase):
         opponent_coord = (4, 8)
 
         self.assertEqual(
-            self.move_checker.jump_over_coords(player_coord, opponent_coord),
+            self.move_checker.jump_over_coords(self.board, player_coord, opponent_coord),
             set()
         )
 
     def test_is_within_board(self):
-        self.assertTrue(self.move_checker.is_within_board((0, 0)))
-        self.assertTrue(self.move_checker.is_within_board((8, 8)))
-        self.assertFalse(self.move_checker.is_within_board((-1, 0)))
-        self.assertFalse(self.move_checker.is_within_board((0, 9)))
+        self.assertTrue(self.move_checker.is_within_board(self.board, (0, 0)))
+        self.assertTrue(self.move_checker.is_within_board(self.board, (8, 8)))
+        self.assertFalse(self.move_checker.is_within_board(self.board, (-1, 0)))
+        self.assertFalse(self.move_checker.is_within_board(self.board, (0, 9)))
 
     def test_is_fence_blocking(self):
         self.board.fences_horizontal = {(1, 1), (2, 3)}
         self.board.fences_vertical = {(4, 4), (5, 5)}
 
         self.assertTrue(
-            self.move_checker.is_fence_blocking((1, 1), (1, 2))
+            self.move_checker.is_fence_blocking(self.board, (1, 1), (1, 2))
         )
 
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (4, 5), (5, 5)
             )
         )
 
         self.assertFalse(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (0, 0), (0, 1)
             )
         )
         self.assertFalse(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (3, 2), (4, 2)
             )
         )
@@ -58,39 +58,39 @@ class TestMoveChecker(unittest.TestCase):
 
         # From Left to right
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (2, 1), (3, 1)
             )
         )
 
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (2, 2), (3, 2)
             )
         )
 
         # From right to left
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (3, 1), (2, 1)
             )
         )
 
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (3, 2), (2, 2)
             )
         )
 
         # FALSE
         self.assertFalse(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (2, 1), (1, 1)
             )
         )
 
         self.assertFalse(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (2, 2), (1, 2)
             )
         )
@@ -100,13 +100,13 @@ class TestMoveChecker(unittest.TestCase):
         self.board.fences_vertical = {}
 
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (2, 1), (2, 2)
             )
         )
 
         self.assertTrue(
-            self.move_checker.is_fence_blocking(
+            self.move_checker.is_fence_blocking(self.board, 
                 (3, 1), (3, 2)
             )
         )
@@ -118,7 +118,7 @@ class TestMoveChecker(unittest.TestCase):
         self.board.fences_vertical = set()
 
         self.assertEqual(
-            self.move_checker.jump_over_coords(
+            self.move_checker.jump_over_coords(self.board, 
                 player_coord, opponent_coord
             ),
             set([(2, 3)])
@@ -131,7 +131,7 @@ class TestMoveChecker(unittest.TestCase):
         self.board.fences_vertical = set()
 
         self.assertEqual(
-            self.move_checker.jump_over_coords(
+            self.move_checker.jump_over_coords(self.board, 
                 player_coord, opponent_coord
             ),
             set([(1, 2), (3, 2)])
@@ -144,7 +144,7 @@ class TestMoveChecker(unittest.TestCase):
         self.board.fences_vertical = {(2, 1)}
 
         self.assertEqual(
-            self.move_checker.jump_over_coords(
+            self.move_checker.jump_over_coords(self.board, 
                 player_coord, opponent_coord
             ),
             set([(1, 2)])

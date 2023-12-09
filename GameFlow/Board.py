@@ -18,12 +18,13 @@ class Board(State):
                  disable_turn: bool = False):
         self.fence_checker = fence_checker
         self.move_checker = move_checker
-        move_checker.set_board(board=self)
-        mid_point = move_checker.grid_size // 2
+        self.grid_size = grid_size
+        
+        mid_point = grid_size // 2
         if player_positions is None:
             self.player_positions = {
                 Player.MAX: (mid_point, 0),                           # Player.MAX starts at the top row
-                Player.MIN: (mid_point, move_checker.grid_size - 1)   # Player.MIN starts at the bottom row
+                Player.MIN: (mid_point, grid_size - 1)   # Player.MIN starts at the bottom row
             }
         else:
             self.player_positions = player_positions
@@ -35,7 +36,7 @@ class Board(State):
         if fences_vertical is None:
             fences_vertical = set()
         self.fences_vertical = fences_vertical
-        self.max_fences = int(self.move_checker.grid_size * self.move_checker.grid_size * (10 / 81))
+        self.max_fences = int(self.grid_size * self.grid_size * (10 / 81))
         self.disable_turn = disable_turn
         self.grid_size = grid_size
 
@@ -59,8 +60,8 @@ class Board(State):
         # Calculate possible fence placements
         if ((len(self.fences_horizontal) + len(self.fences_vertical) <= self.max_fences) 
             and not self.disable_turn):
-            for i in range(self.move_checker.grid_size - 1):
-                for j in range(self.move_checker.grid_size - 1):
+            for i in range(self.grid_size - 1):
+                for j in range(self.grid_size - 1):
                     placing_coord = (i, j)
                     if self.can_place_fence(placing_coord, True):
                         action = PlaceFence(True, placing_coord)
@@ -103,7 +104,8 @@ class Board(State):
 
     def get_movable_coords(self) -> set[tuple[int, int]]:
         """Returns a set of coordinates the current player can move to"""
-        return self.move_checker.get_movable_coords(self.player_positions[self.current_player],
+        return self.move_checker.get_movable_coords(self, 
+                                                    self.player_positions[self.current_player],
                                                     self.player_positions[self.current_opponent])
 
     def __eq__(self, other):

@@ -1,4 +1,5 @@
 import heapq
+from copy import deepcopy
 from Core import Player
 from GameFlow import Board
 from Heuristics import DistanceHeuristic
@@ -10,9 +11,10 @@ class ShortestPathHeuristic:
 
     """Shortest-path heuristic """
     def __call__(self, board: Board, print_path: bool = False):
-        player = board.current_player
-        target_line = board.move_checker.grid_size - 1 if player == Player.MAX else 0
-        return self.a_star(board, board.player_positions[player], target_line, print_path)
+        board_copy = deepcopy(board)
+        player = board_copy.current_player
+        target_line = board_copy.grid_size - 1 if player == Player.MAX else 0
+        return self.a_star(board_copy, board_copy.player_positions[player], target_line, print_path)
 
     def recover_path(self, came_from: dict, current):
         total_path = [current]
@@ -56,7 +58,10 @@ class ShortestPathHeuristic:
 
     def get_neighbors(self, board: Board, node):
         """Get the neighboring nodes in the board"""
-        return board.move_checker.get_movable_coords(player_coord=node)
+        return board.move_checker.get_movable_coords(
+            board,
+            player_coord=node
+        )
 
     def heuristic(self, board: Board, node):
         """Get primitive heuristic for A*-search"""
