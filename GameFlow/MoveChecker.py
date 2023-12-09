@@ -17,11 +17,11 @@ class MoveChecker:
         if opponent_coord is None:
             opponent_coord = self.board.player_positions[self.board.current_opponent]
         movable_coords = set()
-
         # Check all four directions: left, right, up, down
         for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             next_coord = (player_coord[0] + dx, player_coord[1] + dy)
             is_blocking_fence = self.is_fence_blocking(player_coord, next_coord)
+            # print(f"next coord is {next_coord}, is it blocked by fence? {is_blocking_fence}")
             if self.is_within_board(next_coord) and not is_blocking_fence:
                 jumping_coords_if_any = self.jump_over_coords(player_coord, opponent_coord)
                 movable_coords = movable_coords | jumping_coords_if_any
@@ -38,6 +38,9 @@ class MoveChecker:
             player_coord = self.board.player_positions[self.board.current_player]
         if opponent_coord is None:
             opponent_coord = self.board.player_positions[self.board.current_opponent]
+
+        if self.is_fence_blocking(player_coord, opponent_coord):
+            return set()
 
         if player_coord[1] == opponent_coord[1]: # horizontally jumping
             if player_coord[0] == left(opponent_coord)[0]: # player is to the left

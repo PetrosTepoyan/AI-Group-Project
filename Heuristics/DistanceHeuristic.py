@@ -9,7 +9,7 @@ class DistanceHeuristic:
         if position is None:
             position = board.player_positions[player]
         if player == Player.MAX:
-            distance = board.grid_size - position[1] - 1
+            distance = board.move_checker.grid_size - position[1] - 1
             for fence in board.fences_horizontal:
                 b1 = fence[0] == position[0]
                 b2 = fence[0] == (position[0] - 1)

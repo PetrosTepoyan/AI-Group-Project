@@ -3,7 +3,6 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 import unittest
-from Core import Player
 from GameFlow import Board, FenceChecker, MoveChecker
 
 class TestMoveChecker(unittest.TestCase):

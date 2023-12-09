@@ -10,6 +10,7 @@ class Board(State):
     def __init__(self,
                  fence_checker: FenceChecker,
                  move_checker: MoveChecker,
+                 grid_size = 9,
                  player_positions: dict = None,
                  current_player: Player = Player.MAX,
                  fences_horizontal: set[tuple[int, int]] = None,
@@ -36,6 +37,7 @@ class Board(State):
         self.fences_vertical = fences_vertical
         self.max_fences = int(self.move_checker.grid_size * self.move_checker.grid_size * (10 / 81))
         self.disable_turn = disable_turn
+        self.grid_size = grid_size
 
     def get_player(self) -> Player:
         return self.current_player
