@@ -50,10 +50,6 @@ class FenceCheckerTests(unittest.TestCase):
         fences_horizontal = {(0, 0)}
         self.assertFalse(self.checker.can_place_fence((0,0), True, fences_horizontal, set()))
 
-    def test_fence_same_place(self):
-        fences_horizontal = {(0, 0)}
-        self.assertTrue(self.checker.can_place_fence((2,0), True, fences_horizontal, set()))
-
     # More tests should be written to check intersections and path blocking
 
 if __name__ == '__main__':

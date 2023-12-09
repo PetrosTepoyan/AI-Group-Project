@@ -1,2 +1,2 @@
 class Action:
-    pass
+    """Interface for a player action"""
