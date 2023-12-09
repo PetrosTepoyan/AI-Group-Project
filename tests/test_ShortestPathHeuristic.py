@@ -12,7 +12,7 @@ class TestShortestPathHeuristic(unittest.TestCase):
 
     def setUp(self):
         self.board_size = 5
-        self.board = Board(FenceChecker(grid_size=self.board_size, fence_length=2), MoveChecker())
+        self.board = Board(FenceChecker(grid_size=self.board_size, fence_length=2), MoveChecker(), self.board_size)
 
     def test_no_fences(self):
         self.assertEqual(ShortestPathHeuristic()(board=self.board), 4)
@@ -26,7 +26,7 @@ class TestShortestPathHeuristic(unittest.TestCase):
     def test_avoid_long_fence(self):
         self.board.fences_horizontal = {(1, 0), (3, 0)}
 
-        self.assertEqual(ShortestPathHeuristic()(board=self.board, print_path=True), 6)
+        self.assertEqual(ShortestPathHeuristic()(board=self.board), 6)
 
     def test_dead_end(self):
         self.board.fences_horizontal = {(1, 0)}
