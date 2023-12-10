@@ -1,5 +1,5 @@
 from GameFlow import Board, BoardTerminalTest, FenceChecker, MoveChecker
-from Search import DLAlphaBetaSearch, MinimaxSearch, AlphaBetaSearch
+from Search import DLAlphaBetaSearch, MinimaxSearch, AlphaBetaSearch, DLMinimaxSearch
 from Core import Player
 from Heuristics import ShortestPathHeuristic
 from copy import deepcopy
@@ -16,6 +16,7 @@ class Versus:
         move_checker = MoveChecker()
         self.board = Board(fence_checker, move_checker, self.grid_size)
         self.terminal_test = BoardTerminalTest()
+        self.visit_count = {}
 
     def start(self) -> None:
         """Begin the simulation"""
@@ -29,7 +30,11 @@ class Versus:
 
             if tmp_board.current_player == Player.MAX:
                 
-                max_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.max_depth_level, heuristic = heuristic)
+                max_search: DLAlphaBetaSearch = DLAlphaBetaSearch(
+                    depth = self.max_depth_level,
+                    heuristic = heuristic, 
+                    visit_count = self.visit_count
+                )
                 max_strategy = max_search.find_strategy(tmp_board, self.terminal_test)
                 
                 max_best_action = max_strategy.get(tmp_board)
@@ -38,7 +43,11 @@ class Versus:
                 continue
             else:
                 
-                min_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.min_depth_level, heuristic = heuristic)
+                min_search: DLAlphaBetaSearch = DLAlphaBetaSearch(
+                    depth = self.min_depth_level,
+                    heuristic = heuristic,
+                    visit_count = self.visit_count
+                )
                 min_strategy = min_search.find_strategy(tmp_board, self.terminal_test)  
                 
                 min_best_action = min_strategy.get(tmp_board)

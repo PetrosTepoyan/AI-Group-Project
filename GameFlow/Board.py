@@ -4,6 +4,7 @@ from Protocols import Action, State
 from Actions import Move, PlaceFence
 from GameFlow import FenceChecker
 from GameFlow import MoveChecker
+from UIKit import UIBoard
 
 class Board(State):
     """`Board` is a class representing the current `State` of Quoridor"""
@@ -127,7 +128,4 @@ class Board(State):
                      self.current_player))
 
     def __repr__(self):
-        max_p = self.player_positions[Player.MAX]
-        min_p = self.player_positions[Player.MIN]
-        return (f"Board {self.current_player} | MAX:{max_p} - MIN:{min_p} | "
-                f"{len(self.fences_horizontal)} | {len(self.fences_vertical)}")
+        return UIBoard.string_board(self)

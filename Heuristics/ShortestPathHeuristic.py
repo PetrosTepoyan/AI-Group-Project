@@ -14,8 +14,7 @@ class ShortestPathHeuristic:
         board_copy = deepcopy(board)
         player = board_copy.current_player
         target_line = board_copy.grid_size - 1 if player == Player.MAX else 0
-        return (self.a_star(board_copy, board_copy.player_positions[player], target_line, print_path)
-                + self.distance_heuristic(board, board_copy.player_positions[board_copy.current_opponent]))
+        return 1 / (self.a_star(board_copy, board_copy.player_positions[player], target_line, print_path))
 
     def recover_path(self, came_from: dict, current):
         total_path = [current]
@@ -42,7 +41,7 @@ class ShortestPathHeuristic:
             if current[1] == target_line:
                 if print_path:
                     print(self.recover_path(came_from, current))
-                return g_score[current]
+                return max(1, g_score[current])
 
             for neighbor in self.get_neighbors(board, current):
                 # print(f"visited neighbor {neighbor}")

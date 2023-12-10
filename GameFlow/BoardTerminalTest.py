@@ -13,7 +13,7 @@ class BoardTerminalTest(TerminalTest):
         max_won = state.player_positions[Player.MAX][1] >= (state.grid_size - 1)
         min_won = state.player_positions[Player.MIN][1] <= 0
         if max_won:
-            return float("+inf")
+            return 1
         if min_won:
-            return float("-inf")
+            return -1
         return 0

@@ -6,9 +6,10 @@ from UIKit import UIBoard
 
 class DLAlphaBetaSearch(Search):
     """Depth-Limited version of Classic Alpha-Beta Search"""
-    def __init__(self, depth, heuristic):
+    def __init__(self, depth, heuristic, visit_count = {}):
         self.depth = depth
         self.heuristic = heuristic
+        self.visit_count = visit_count
 
     def find_strategy(self, initial_state, terminal_test):
         strategy = {}
@@ -30,23 +31,19 @@ class DLAlphaBetaSearch(Search):
         if state in self.state_utilities:
             return self.state_utilities[state]
 
-        if depth == 0:
-            utility = -self.heuristic(state)
+        if depth == 0 or terminal_test.is_terminal(state):
+            utility = self.heuristic(state)
             strategy[state] = None
             self.state_utilities[state] = utility
             return utility
-
-        if terminal_test.is_terminal(state):
-            utility = terminal_test.utility(state)
-            strategy[state] = None
-            self.state_utilities[state] = utility
-            return utility
-
-        if state in self.visited_states:
-            self.state_utilities[state] = 0
+        
+        if self.visit_count.get(state):
+            self.visit_count[state] += 1
+        else:
+            self.visit_count[state] = 0
+        
+        if self.visit_count.get(state) > 0:
             return 0
-
-        self.visited_states.add(state)
 
         # The advantages of alpha-beta start to arise here.
         # We first make a symbolical reassignment of alpha
@@ -65,7 +62,7 @@ class DLAlphaBetaSearch(Search):
             self._number_of_generated_states += 1
             v2 = self.min_value(new_state, terminal_test, alpha_1, beta, strategy, depth - 1)
 
-            if v2 >= v:
+            if v2 > v:
                 v = v2
                 move = action
                 # Here, we update the value of alpha if we found a greater one
@@ -74,7 +71,7 @@ class DLAlphaBetaSearch(Search):
             # And here is the power of alpha-beta. If we found that our current
             # utility is greater than beta, we will simply return the utility, thus
             # pruning the other states.
-            if v >= beta:
+            if v > beta:
                 strategy[state] = move
                 self.state_utilities[new_state] = v
                 return v
@@ -93,24 +90,20 @@ class DLAlphaBetaSearch(Search):
         if state in self.state_utilities:
             return self.state_utilities[state]
 
-        if depth == 0:
-            utility = self.heuristic(state)
+        if depth == 0 or terminal_test.is_terminal(state):
+            utility = -self.heuristic(state)
             strategy[state] = None
             self.state_utilities[state] = utility
             return utility
-
-        if terminal_test.is_terminal(state):
-            utility = terminal_test.utility(state)
-            strategy[state] = None
-            self.state_utilities[state] = utility
-            return utility
-
-        if state in self.visited_states:
-            self.state_utilities[state] = 0
+        
+        if self.visit_count.get(state):
+            self.visit_count[state] += 1
+        else:
+            self.visit_count[state] = 0
+        
+        if self.visit_count.get(state) > 0:
             return 0
-
-        self.visited_states.add(state)
-
+        
         v = inf
         beta_1 = beta
         move = None
@@ -126,12 +119,12 @@ class DLAlphaBetaSearch(Search):
             self._number_of_generated_states += 1
             v2 = self.max_value(new_state, terminal_test, alpha, beta_1, strategy, depth - 1)
 
-            if v2 <= v:
+            if v2 < v:
                 v = v2
                 move = action
                 beta_1 = min(beta_1, v)
 
-            if v <= alpha:
+            if v < alpha:
                 strategy[state] = move
                 self.state_utilities[new_state] = v
                 return v

@@ -59,6 +59,43 @@ class UIBoard:
             
         print("  " + "-" * (self.board_size * 4 + 1))
         
+    def string(self):
+        board_str = ""
+        board_str += "    " + "   ".join([str(i) for i in range(self.board_size)]) + "\n"
+        for i in range(0, self.board_size):
+            row_line = "  "
+            col_line = str(i) + " | "
+            for j in range(0, self.board_size):
+                coord_for_row = (j, i - 1)
+                if i == 0:
+                    row_line = "  " + "-" * (self.board_size * 4 + 1)
+                else:
+                    row_symb_for_coord = self.row_symb(coord_for_row)
+                    row_line += "-" + row_symb_for_coord
+
+                in_cell = self.in_cell_symb((j, i))
+
+                coord_for_col = (j, i)
+                col_symb_for_coord = self.col_symb(in_cell, coord_for_col)
+                col_line += col_symb_for_coord
+
+            board_str += row_line + "\n"
+            board_str += col_line + "\n"
+
+        board_str += "  " + "-" * (self.board_size * 4 + 1) + "\n"
+        return board_str
+   
+    @staticmethod
+    def string_board(board):
+        ui_board = UIBoard(
+            board_size = board.grid_size,
+            fences_horizontal = board.fences_horizontal, 
+            fences_vertical = board.fences_vertical,
+            player_positions = board.player_positions,
+            current_player= board.current_player
+        )
+        return ui_board.string()
+        
     @staticmethod
     def print_board(board):
         ui_board = UIBoard(

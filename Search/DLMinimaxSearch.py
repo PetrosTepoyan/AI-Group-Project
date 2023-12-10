@@ -27,7 +27,7 @@ class DLMinimaxSearch(Search):
             return self.state_utilities[state]
 
         if depth == 0:
-            utility = -self.heuristic(state)
+            utility = self.heuristic(state)
             strategy[state] = None
             self.state_utilities[state] = utility
             return utility
@@ -77,7 +77,7 @@ class DLMinimaxSearch(Search):
             return self.state_utilities[state]
 
         if depth == 0:
-            utility = self.heuristic(state)
+            utility = -self.heuristic(state)
             strategy[state] = None
             self.state_utilities[state] = utility
 
