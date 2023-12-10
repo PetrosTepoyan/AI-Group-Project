@@ -9,12 +9,11 @@ class BoardTerminalTest(TerminalTest):
         min_won = state.player_positions[Player.MIN][1] <= 0
         return max_won or min_won
 
-    def utility(self, state: Board) -> int:
+    def utility(self, state: Board):
         max_won = state.player_positions[Player.MAX][1] >= (state.grid_size - 1)
         min_won = state.player_positions[Player.MIN][1] <= 0
         if max_won:
-            return 1
+            return float("+inf")
         if min_won:
-            return -1
+            return float("-inf")
         return 0
-    

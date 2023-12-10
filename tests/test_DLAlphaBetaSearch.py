@@ -8,7 +8,7 @@ from GameFlow import Board, BoardTerminalTest
 from Search import DLAlphaBetaSearch, MinimaxSearch, AlphaBetaSearch
 from Heuristics import ShortestPathHeuristic
 from Core import Player
-from Actions import Move
+from Actions import Move, PlaceFence
 import unittest
 
 class DLAlphaBetaSearchTests(unittest.TestCase):
@@ -30,37 +30,111 @@ class DLAlphaBetaSearchTests(unittest.TestCase):
     #         fences_vertical = {(1, 3), (2, 3)}   
     #     )
     #     search = AlphaBetaSearch()
-        
+
     #     strategy = search.find_strategy(board, terminal_test)
     #     best_action = strategy[board]
     #     self.assertTrue(isinstance(best_action, Move))
     #     self.assertEqual(strategy[board], Move((2, 2), (2, 3)))
 
-    def test_dl_alpha_beta(self):
+    # def test_dl_alpha_beta(self):
+    #     fence_checker = FenceChecker(2, True)
+    #     move_checker = MoveChecker()
+    #     terminal_test = BoardTerminalTest()
+
+    #     board = Board(
+    #         fence_checker = fence_checker,
+    #         move_checker = move_checker,
+    #         grid_size = 5,
+    #         player_positions = {
+    #             Player.MAX : (2, 2),
+    #             Player.MIN : (4, 4)
+    #         },
+    #         fences_horizontal = set(),
+    #         fences_vertical = {(1, 3), (2, 3)}
+    #     )
+    #     shortest_path_h = ShortestPathHeuristic()
+    #     search = DLAlphaBetaSearch(depth = 3, heuristic = shortest_path_h)
+
+    #     strategy = search.find_strategy(board, terminal_test)
+    #     best_action = strategy[board]
+    #     self.assertTrue(isinstance(best_action, Move))
+    #     self.assertEqual(strategy[board], Move((2, 2), (2, 3)))
+
+    def test_dl_alpha_beta_toggled(self):
         fence_checker = FenceChecker(2, True)
         move_checker = MoveChecker()
         terminal_test = BoardTerminalTest()
-        
+
         board = Board(
             fence_checker = fence_checker,
             move_checker = move_checker,
             grid_size = 5,
             player_positions = {
-                Player.MAX : (2, 2),
-                Player.MIN : (4, 4)
+                Player.MAX : (0, 0),
+                Player.MIN : (2, 2)
             },
             fences_horizontal = set(),
-            fences_vertical = {(1, 3), (2, 3)}   
+            fences_vertical = {(1, 0), (2, 0)}
         )
+        board.toggle_player()
         shortest_path_h = ShortestPathHeuristic()
         search = DLAlphaBetaSearch(depth = 3, heuristic = shortest_path_h)
-        
+
         strategy = search.find_strategy(board, terminal_test)
         best_action = strategy[board]
         print(best_action)
-        print(type(best_action))
         self.assertTrue(isinstance(best_action, Move))
-        self.assertEqual(strategy[board], Move((2, 2), (2, 3)))
+        self.assertEqual(strategy[board], Move((2, 2), (2, 1)))
+
+    # def test_dl_alpha_beta_min_almost_wins(self):
+    #     fence_checker = FenceChecker(2, True)
+    #     move_checker = MoveChecker()
+    #     terminal_test = BoardTerminalTest()
+
+    #     board = Board(
+    #         fence_checker = fence_checker,
+    #         move_checker = move_checker,
+    #         grid_size = 5,
+    #         player_positions = {
+    #             Player.MAX : (2, 2),
+    #             Player.MIN : (3, 1)
+    #         },
+    #         fences_horizontal = set(),
+    #         fences_vertical = set()
+    #     )
+    #     shortest_path_h = ShortestPathHeuristic()
+    #     search = DLAlphaBetaSearch(depth = 5, heuristic = shortest_path_h)
+
+    #     strategy = search.find_strategy(board, terminal_test)
+    #     best_action = strategy[board]
+    #     print(best_action)
+    #     self.assertTrue(isinstance(best_action, PlaceFence))
+    #     self.assertTrue(strategy[board] in [PlaceFence(True, (2, 0)), PlaceFence(True, (3, 0))])
+
+    # def test_dl_alpha_beta_jump_over_opponent(self):
+    #     fence_checker = FenceChecker(2, True)
+    #     move_checker = MoveChecker()
+    #     terminal_test = BoardTerminalTest()
+
+    #     board = Board(
+    #         fence_checker = fence_checker,
+    #         move_checker = move_checker,
+    #         grid_size = 5,
+    #         player_positions = {
+    #             Player.MAX : (2, 2),
+    #             Player.MIN : (2, 3)
+    #         },
+    #         fences_horizontal = {(2, 3)},
+    #         fences_vertical = {(1, 1), (2, 1)}
+    #     )
+    #     shortest_path_h = ShortestPathHeuristic()
+    #     search = DLAlphaBetaSearch(depth = 5, heuristic = shortest_path_h)
+
+    #     strategy = search.find_strategy(board, terminal_test)
+    #     best_action = strategy[board]
+    #     print(best_action)
+    #     self.assertTrue(isinstance(best_action, Move))
+    #     self.assertEqual(strategy[board], Move((2, 2), (1, 3)))
 
 if __name__ == '__main__':
     unittest.main()
