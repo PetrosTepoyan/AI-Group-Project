@@ -1,20 +1,17 @@
 from Protocols import Action
 
 class PlaceFence(Action):
-    
-    def __init__(self, isHorizontal: bool, coord: (int, int)):
-        self.isHorizontal = isHorizontal
+    "`PlaceFence` is an `Action` class responsible for placing a fence on the board"
+    def __init__(self, is_horizontal: bool, coord: (int, int)):
+        self.is_horizontal = is_horizontal
         self.coord = coord
-        
+
     def __eq__(self, other):
-        try:
-            return self.isHorizontal == other.isHorizontal and self.coord == other.coord
-        except:
-            return False
-    
+        return self.is_horizontal == other.is_horizontal and self.coord == other.coord
+
     def __hash__(self):
-        return hash((self.isHorizontal, self.coord))
-    
+        return hash((self.is_horizontal, self.coord))
+
     def __repr__(self):
-        direction = "H" if self.isHorizontal else "V"
+        direction = "H" if self.is_horizontal else "V"
         return f"PlaceFence | {direction} at {self.coord}"

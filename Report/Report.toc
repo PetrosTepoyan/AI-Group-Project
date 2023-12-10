@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}Introduction $|$ Game Rules }{1}{}%
+\contentsline {section}{\numberline {2}Literature review}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Monte Carlo Tree Search for Quoridor}{2}{}%
+\contentsline {subsection}{\numberline {2.2}Minimax, Alpha-Beta Pruning, Expectimax for Quoridor}{3}{}%
+\contentsline {subsection}{\numberline {2.3}Retrograde Analysis of Quoridor}{3}{}%
+\contentsline {subsection}{\numberline {2.4}AI for Quoridor in Javascript.}{3}{}%
+\contentsline {subsection}{\numberline {2.5}Python Quoridor AI}{4}{}%
+\contentsline {subsubsection}{\numberline {2.5.1}How the Problem is Solved}{4}{}%
+\contentsline {subsubsection}{\numberline {2.5.2}Drawbacks of their solution}{5}{}%
+\contentsline {section}{\numberline {3}Future Plans:}{5}{}%
