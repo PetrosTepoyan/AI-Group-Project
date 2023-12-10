@@ -26,7 +26,7 @@ class DLAlphaBetaSearch(Search):
         return strategy
 
     def max_value(self, state, terminal_test, alpha, beta, strategy, depth):
-        UIBoard.print_board(state)
+        # UIBoard.print_board(state)
         if state in self.state_utilities:
             return self.state_utilities[state]
 
@@ -89,18 +89,18 @@ class DLAlphaBetaSearch(Search):
 
     # Analogically to the method above, we implement min_value method
     def min_value(self, state, terminal_test, alpha, beta, strategy, depth):
-        UIBoard.print_board(state)
+        # UIBoard.print_board(state)
         if state in self.state_utilities:
             return self.state_utilities[state]
 
-        if terminal_test.is_terminal(state):
-            utility = terminal_test.utility(state)
+        if depth == 0:
+            utility = self.heuristic(state)
             strategy[state] = None
             self.state_utilities[state] = utility
             return utility
 
-        if depth == 0:
-            utility = self.heuristic(state)
+        if terminal_test.is_terminal(state):
+            utility = terminal_test.utility(state)
             strategy[state] = None
             self.state_utilities[state] = utility
             return utility

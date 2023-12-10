@@ -10,6 +10,7 @@ from Heuristics import ShortestPathHeuristic
 from Core import Player
 from Actions import Move, PlaceFence
 import unittest
+from UIKit import UIBoard
 
 class DLAlphaBetaSearchTests(unittest.TestCase):
     
@@ -73,6 +74,7 @@ class DLAlphaBetaSearchTests(unittest.TestCase):
                 Player.MAX : (0, 0),
                 Player.MIN : (2, 2)
             },
+            current_player=Player.MIN,
             fences_horizontal = set(),
             fences_vertical = {(1, 0), (2, 0)}
         )
@@ -83,6 +85,8 @@ class DLAlphaBetaSearchTests(unittest.TestCase):
         strategy = search.find_strategy(board, terminal_test)
         best_action = strategy[board]
         print(best_action)
+        UIBoard.print_board(board)
+        UIBoard.print_board(board.get_action_result(best_action))
         self.assertTrue(isinstance(best_action, Move))
         self.assertEqual(strategy[board], Move((2, 2), (2, 1)))
 

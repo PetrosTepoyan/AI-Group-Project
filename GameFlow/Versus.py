@@ -27,17 +27,20 @@ class Versus:
 
             UIBoard.print_board(tmp_board)
 
-            max_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.max_depth_level, heuristic = heuristic)
-            max_strategy = max_search.find_strategy(tmp_board, self.terminal_test)
-
-            min_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.min_depth_level, heuristic = heuristic)
-            min_strategy = min_search.find_strategy(tmp_board, self.terminal_test)  
-
             if tmp_board.current_player == Player.MAX:
+                
+                max_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.max_depth_level, heuristic = heuristic)
+                max_strategy = max_search.find_strategy(tmp_board, self.terminal_test)
+                
                 max_best_action = max_strategy.get(tmp_board)
                 tmp_board = tmp_board.get_action_result(max_best_action)
+                
                 continue
             else:
+                
+                min_search: DLAlphaBetaSearch = DLAlphaBetaSearch(depth = self.min_depth_level, heuristic = heuristic)
+                min_strategy = min_search.find_strategy(tmp_board, self.terminal_test)  
+                
                 min_best_action = min_strategy.get(tmp_board)
                 tmp_board = tmp_board.get_action_result(min_best_action)
                 continue
